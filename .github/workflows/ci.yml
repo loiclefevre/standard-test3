@@ -26,14 +26,18 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - rdbms: oracle_atps
+          - rdbms: autonomous
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Reclaim disk space and sanitize user home
         run: .github/ci-prerequisites.sh
+      # test
       - uses: loiclefevre/test@v0.0.4
+        with:
+          type: ${{ matrix.rdbms }}
+          runid: ${{ github.run_number }}
       - name: Start database
         env:
           RDBMS: ${{ matrix.rdbms }}
