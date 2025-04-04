@@ -33,7 +33,8 @@ jobs:
           persist-credentials: false
       - name: Reclaim disk space and sanitize user home
         run: .github/ci-prerequisites.sh
-      - uses: loiclefevre/setup-test-appli@v0.0.4
+      - name: Setup
+        uses: actions/setup-test-appli@v0.0.4
       - name: Start database
         env:
           RDBMS: ${{ matrix.rdbms }}
