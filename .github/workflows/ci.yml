@@ -26,7 +26,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - rdbms: autonomous
+          - rdbms: atps
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,7 +34,7 @@ jobs:
       - name: Reclaim disk space and sanitize user home
         run: .github/ci-prerequisites.sh
       # test
-      - uses: loiclefevre/test@v0.0.11
+      - uses: loiclefevre/test@v0.0.13
         with:
           type: ${{ matrix.rdbms }}
       - name: Start database
