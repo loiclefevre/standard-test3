@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+group = 'org.datawarriors.standard'
+version = '1.0.0'
+buildDir = "target"
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
+    testRuntimeOnly 'com.oracle.database.jdbc:ojdbc17:23.7.0.25.01'
+}
+
+test {
+    useJUnitPlatform()
+
+    systemProperty 'jdbc.url', 'jdbc:oracle:thin:' + System.getProperty("dbUser") + '/' + System.getProperty("dbPassword") + '@(description=(retry_count=5)(retry_delay=1)(address=(protocol=tcps)(port=1521)(host=' + System.getProperty("dbHost") + '.oraclecloud.com))(connect_data=(service_name=' + System.getProperty("dbService") + '_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=no)))'
+
+    maxHeapSize = '1G'
+
+    testLogging {
+        events "passed"
+    }
+}
