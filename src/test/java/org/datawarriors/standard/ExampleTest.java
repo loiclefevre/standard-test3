@@ -19,7 +19,7 @@ public class ExampleTest {
 				try (ResultSet r = s.executeQuery("select 'Hello from database!' from dual")) {
 					if (r.next()) {
 						try {
-							Thread.sleep( 60*1000L ); // 60s
+							Thread.sleep( /*60**/1000L ); // 60s
 						}
 						catch (InterruptedException ignored) {
 						}
