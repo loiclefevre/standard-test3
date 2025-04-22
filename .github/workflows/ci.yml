@@ -34,11 +34,9 @@ jobs:
       - name: Reclaim disk space and sanitize user home
         run: .github/ci-prerequisites.sh
       # test
-      - uses: loiclefevre/test@v0.0.17
+      - uses: loiclefevre/test@v0.0.18
         with:
           type: ${{ matrix.rdbms }}
-        env:
-          VERSION: v0.0.17
       - name: Start database
         env:
           RDBMS: ${{ matrix.rdbms }}
