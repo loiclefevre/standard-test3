@@ -42,10 +42,6 @@ jobs:
           password: My_Password_4_Testing
         env:
           API_HOST: api.testpilotdev-controller.oraclecloud.com
-      - name: my_test
-        run: |
-          echo ${{ steps.create_database.outputs.host }}
-          echo ${{ steps.create_database.outputs.service }}
       - name: Set up Java 21
         uses: graalvm/setup-graalvm@v1
         with:
