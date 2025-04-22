@@ -37,6 +37,8 @@ jobs:
       - uses: loiclefevre/test@v0.0.17
         with:
           type: ${{ matrix.rdbms }}
+        env:
+          VERSION: v0.0.17
       - name: Start database
         env:
           RDBMS: ${{ matrix.rdbms }}
