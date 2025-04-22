@@ -39,7 +39,8 @@ jobs:
           type: ${{ matrix.rdbms }}
           user: test
           password: My_Password_4_Testing
-#        env:
+        env:
+          API_HOST: api.testpilotdev-controller.oraclecloud.com
 #          RUNID: ${{ github.run_number }}
 #      - name: Start database
 #        env:
