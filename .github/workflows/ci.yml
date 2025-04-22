@@ -34,14 +34,17 @@ jobs:
       - name: Reclaim disk space and sanitize user home
         run: .github/ci-prerequisites.sh
       # test
-      - uses: loiclefevre/test@v0.0.20
+      - uses: loiclefevre/test@v0.0.21
         with:
           type: ${{ matrix.rdbms }}
-      - name: Start database
-        env:
-          RDBMS: ${{ matrix.rdbms }}
-          RUNID: ${{ github.run_number }}
-        run: .github/database-start.sh
+          user: test
+          password: My_Password_4_Testing
+#        env:
+#          RUNID: ${{ github.run_number }}
+#      - name: Start database
+#        env:
+#          RDBMS: ${{ matrix.rdbms }}
+#        run: .github/database-start.sh
       - name: Set up Java 21
         uses: graalvm/setup-graalvm@v1
         with:
