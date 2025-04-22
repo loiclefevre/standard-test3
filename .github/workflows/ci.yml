@@ -34,24 +34,19 @@ jobs:
       - name: Reclaim disk space and sanitize user home
         run: .github/ci-prerequisites.sh
       # test
-      - uses: loiclefevre/test@v0.0.21
+      - name: create_database
+        uses: loiclefevre/test@v0.0.23
         with:
           type: ${{ matrix.rdbms }}
           user: test
           password: My_Password_4_Testing
         env:
           API_HOST: api.testpilotdev-controller.oraclecloud.com
-#          RUNID: ${{ github.run_number }}
-#      - name: Start database
-#        env:
-#          RDBMS: ${{ matrix.rdbms }}
-#        run: .github/database-start.sh
       - name: Set up Java 21
         uses: graalvm/setup-graalvm@v1
         with:
           distribution: 'graalvm'
           java-version: '21'
-
       - name: Generate cache key
         id: cache-key
         run: |
@@ -99,10 +94,21 @@ jobs:
         env:
           RDBMS: ${{ matrix.rdbms }}
           RUNID: ${{ github.run_number }}
+          HOST: ${{ steps.create_database.outputs.host }}
+          SERVICE: ${{ steps.create_database.outputs.service }}
           # These runners have no HOME variable set by default, we need to explicitly set it to make the build work
           HOME: /root
         run: ./.github/build-github.sh
         shell: bash
+
+
+      - uses: loiclefevre/test@v0.0.23
+        with:
+          service: drop-schema
+          type: ${{ matrix.rdbms }}
+          user: test
+        env:
+          API_HOST: api.testpilotdev-controller.oraclecloud.com
       # Upload build scan data.
       # The actual publishing must be done in a separate job (see ci-report.yml).
       # We don't write to the remote cache as that would be unsafe.
