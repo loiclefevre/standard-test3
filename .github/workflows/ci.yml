@@ -33,15 +33,17 @@ jobs:
           persist-credentials: false
       - name: Reclaim disk space and sanitize user home
         run: .github/ci-prerequisites.sh
+
       # test
       - id: create_database
         uses: loiclefevre/test@v0.0.27
         with:
           type: ${{ matrix.rdbms }}
           user: test
-          password: My_Password_4_Testing
+          password: ${{ secrets.TEST_USER_PASSWORD }}
         env:
           API_HOST: api.testpilotdev-controller.oraclecloud.com
+
       - name: Set up Java 21
         uses: graalvm/setup-graalvm@v1
         with:
