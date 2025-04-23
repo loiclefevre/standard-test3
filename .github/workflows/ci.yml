@@ -39,7 +39,7 @@ jobs:
         uses: loiclefevre/test@v0.0.30
         with:
           type: ${{ matrix.rdbms }}
-          user: test
+          user: test,loic
           password: ${{ secrets.TEST_USER_PASSWORD }}
         env:
           API_HOST: api.testpilotdev-controller.oraclecloud.com
@@ -108,7 +108,7 @@ jobs:
         with:
           service: drop-database
           type: ${{ matrix.rdbms }}
-          user: test
+          user: test,loic
         env:
           API_HOST: api.testpilotdev-controller.oraclecloud.com
 
