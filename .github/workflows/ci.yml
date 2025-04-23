@@ -36,7 +36,7 @@ jobs:
 
       # test
       - id: create_database
-        uses: loiclefevre/test@v0.0.29
+        uses: loiclefevre/test@v0.0.30
         with:
           type: ${{ matrix.rdbms }}
           user: test
@@ -104,7 +104,7 @@ jobs:
         shell: bash
 
 
-      - uses: loiclefevre/test@v0.0.29
+      - uses: loiclefevre/test@v0.0.30
         with:
           service: drop-database
           type: ${{ matrix.rdbms }}
