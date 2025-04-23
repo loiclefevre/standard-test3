@@ -36,7 +36,7 @@ jobs:
 
       # test
       - id: create_database
-        uses: loiclefevre/test@v0.0.28
+        uses: loiclefevre/test@v0.0.29
         with:
           type: ${{ matrix.rdbms }}
           user: test
@@ -104,13 +104,14 @@ jobs:
         shell: bash
 
 
-      - uses: loiclefevre/test@v0.0.28
+      - uses: loiclefevre/test@v0.0.29
         with:
-          service: drop-schema
+          service: drop-database
           type: ${{ matrix.rdbms }}
           user: test
         env:
           API_HOST: api.testpilotdev-controller.oraclecloud.com
+
       # Upload build scan data.
       # The actual publishing must be done in a separate job (see ci-report.yml).
       # We don't write to the remote cache as that would be unsafe.
