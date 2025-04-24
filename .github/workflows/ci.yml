@@ -36,6 +36,10 @@ jobs:
         env:
           API_HOST: api.testpilotdev-controller.oraclecloud.com
 
+      - name: test
+        run: echo "${{ steps.build_guard.outputs.skipping_tests }}"
+        shell: bash
+
       - uses: actions/checkout@v4
         if: ${{ steps.build_guard.outputs.skipping_tests }} == 'no'
         with:
