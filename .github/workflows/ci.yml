@@ -40,18 +40,23 @@ jobs:
         run: echo "${{ steps.build_guard.outputs.skip_tests }}"
         shell: bash
 
+      - name: test2
+        if: ${{ steps.build_guard.outputs.skip_tests }}=='no'
+        run: echo "Hello world!"
+        shell: bash
+
       - uses: actions/checkout@v4
-        if: "${{ steps.build_guard.outputs.skip_tests }} == 'no'"
+        if: ${{ steps.build_guard.outputs.skip_tests }} == 'no'
         with:
           persist-credentials: false
 
       - name: Reclaim disk space and sanitize user home
-        if: "${{ steps.build_guard.outputs.skip_tests }} == 'no'"
+        if: ${{ steps.build_guard.outputs.skip_tests }} == 'no'
         run: .github/ci-prerequisites.sh
 
       # test
       - id: create_database
-        if: "${{ steps.build_guard.outputs.skip_tests }} == 'no'"
+        if: ${{ steps.build_guard.outputs.skip_tests }} == 'no'
         uses: loiclefevre/test@v0.0.34
         with:
           type: ${{ matrix.rdbms }}
