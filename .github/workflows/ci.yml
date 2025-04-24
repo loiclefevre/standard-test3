@@ -28,14 +28,25 @@ jobs:
         include:
           - rdbms: atps
     steps:
+      - id: build_guard
+        uses: loiclefevre/test@v0.0.33
+        with:
+          service: skip-testing
+          prefix_list: .github/workloads/ci.yml,README.md,LICENSE,.gitignore
+        env:
+          API_HOST: api.testpilotdev-controller.oraclecloud.com
+
       - uses: actions/checkout@v4
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no'
         with:
           persist-credentials: false
       - name: Reclaim disk space and sanitize user home
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no'
         run: .github/ci-prerequisites.sh
 
       # test
       - id: create_database
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no'
         uses: loiclefevre/test@v0.0.33
         with:
           type: ${{ matrix.rdbms }}
@@ -45,11 +56,13 @@ jobs:
           API_HOST: api.testpilotdev-controller.oraclecloud.com
 
       - name: Set up Java 21
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no'
         uses: graalvm/setup-graalvm@v1
         with:
           distribution: 'graalvm'
           java-version: '21'
       - name: Generate cache key
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no'
         id: cache-key
         run: |
           CURRENT_BRANCH="${{ github.repository != 'loiclefevre/standard-test3' && 'fork' || github.base_ref || github.ref_name }}"
@@ -63,7 +76,7 @@ jobs:
         id: cache-maven
         uses: actions/cache@v4
         # if it's not a pull request, we restore and save the cache
-        if: github.event_name != 'pull_request'
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no' && github.event_name != 'pull_request'
         with:
           path: |
             ~/.m2/repository/
@@ -80,7 +93,7 @@ jobs:
       - name: Restore Maven/Gradle Dependency/Dist Caches
         uses: actions/cache/restore@v4
         # if it is a pull request, we restore the cache but we don't save it
-        if: github.event_name == 'pull_request'
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no' && github.event_name == 'pull_request'
         with:
           path: |
             ~/.m2/repository/
@@ -93,6 +106,7 @@ jobs:
             ${{ steps.cache-key.outputs.buildtool-monthly-cache-key }}-
 
       - name: Run build script
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no'
         env:
           RDBMS: ${{ matrix.rdbms }}
           RUNID: ${{ github.run_number }}
@@ -105,6 +119,7 @@ jobs:
 
 
       - uses: loiclefevre/test@v0.0.33
+        if: ${{ steps.build_guard.outputs.skip_testing }} == 'no'
         with:
           service: drop-database
           type: ${{ matrix.rdbms }}
@@ -118,13 +133,13 @@ jobs:
       # That's even on push, because we do not trust Atlas runners to hold secrets: they are shared infrastructure.
       - name: Upload GitHub Actions artifact for the Develocity build scan
         uses: actions/upload-artifact@v4
-        if: "${{ !cancelled() }}"
+        if: "${{ !cancelled() }} && ${{ steps.build_guard.outputs.skip_testing }} == 'no'"
         with:
           name: build-scan-data-${{ matrix.rdbms }}
           path: ~/.gradle/build-scan-data
       - name: Upload test reports (if Gradle failed)
         uses: actions/upload-artifact@v4
-        if: failure()
+        if: failure() && ${{ steps.build_guard.outputs.skip_testing }} == 'no'
         with:
           name: test-reports-java11-${{ matrix.rdbms }}
           path: |
