@@ -41,7 +41,7 @@ jobs:
         shell: bash
 
       - name: test2
-        if: ${{ steps.build_guard.outputs.skip_tests }}=='no'
+        if: steps.build_guard.outputs.skip_tests == 'no'
         run: echo "Hello world!"
         shell: bash
 
