@@ -27,6 +27,7 @@ jobs:
       matrix:
         include:
           - rdbms: atps
+          - rdbms: db23ai
     steps:
       - id: build_guard
         uses: loiclefevre/test@v0.0.35
