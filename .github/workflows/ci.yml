@@ -34,7 +34,7 @@ jobs:
           - rdbms: db23ai
     steps:
       - id: build_guard
-        uses: loiclefevre/test@v0.0.40
+        uses: loiclefevre/test@v0.0.41
         with:
           service: skip-testing
           prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
@@ -53,7 +53,7 @@ jobs:
       # test
       - id: create_database
         if: steps.build_guard.outputs.skip_tests == 'no'
-        uses: loiclefevre/test@v0.0.40
+        uses: loiclefevre/test@v0.0.41
         with:
           type: ${{ matrix.rdbms }}
           user: test,loic
@@ -123,7 +123,7 @@ jobs:
         run: ./.github/build-github.sh
         shell: bash
 
-      - uses: loiclefevre/test@v0.0.40
+      - uses: loiclefevre/test@v0.0.41
         if: steps.build_guard.outputs.skip_tests == 'no'
         with:
           service: drop-database
