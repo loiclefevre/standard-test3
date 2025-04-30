@@ -16,9 +16,15 @@ dependencies {
 test {
     useJUnitPlatform()
 
-    System.out.println(System.getProperty("rdbms"));
+    System.out.println();
 
-    systemProperty 'jdbc.url', 'jdbc:oracle:thin:' + System.getProperty("dbUser") + '/' + System.getProperty("dbPassword") + '@(description=(retry_count=5)(retry_delay=1)(address=(protocol=tcps)(port=1521)(host=' + System.getProperty("dbHost") + '.oraclecloud.com))(connect_data=(service_name=' + System.getProperty("dbService") + '_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=no)))'
+    systemProperty 'jdbc.url', 'jdbc:oracle:thin:' + System.getProperty("dbUser") + '/' + System.getProperty("dbPassword") +
+            (
+                    System.getProperty("rdbms").equals("base-database-service-23ai") ?
+                        '@' + System.getProperty("dbHost") + ':1521/' + System.getProperty("dbService")
+                    :
+                        '@(description=(retry_count=5)(retry_delay=1)(address=(protocol=tcps)(port=1521)(host=' + System.getProperty("dbHost") + '.oraclecloud.com))(connect_data=(service_name=' + System.getProperty("dbService") + '_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=no)))'
+            )
 
     maxHeapSize = '1G'
 
