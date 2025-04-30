@@ -55,7 +55,7 @@ jobs:
         if: steps.build_guard.outputs.skip_tests == 'no'
         uses: loiclefevre/test@v0.0.48
         with:
-          oci-resource: ${{ matrix.rdbms }}
+          oci-service: ${{ matrix.rdbms }}
           action: create
           user: test,loic
           password: ${{ secrets.TEST_USER_PASSWORD }}
