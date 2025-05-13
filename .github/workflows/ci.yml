@@ -39,7 +39,7 @@ jobs:
           action: skip-testing
           prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
         env:
-          API_HOST: api.testpilotdev-controller.oraclecorp.com
+          API_HOST: api.testpilotdev-controller.oraclecloud.com
 
       - uses: actions/checkout@v4
         if: steps.build_guard.outputs.skip_tests == 'no'
@@ -60,7 +60,7 @@ jobs:
           user: test,loic
           password: ${{ secrets.TEST_USER_PASSWORD }}
         env:
-          API_HOST: api.testpilotdev-controller.oraclecorp.com
+          API_HOST: api.testpilotdev-controller.oraclecloud.com
 
       - name: Set up Java 21
         if: steps.build_guard.outputs.skip_tests == 'no'
@@ -131,7 +131,7 @@ jobs:
           action: drop
           user: test,loic
         env:
-          API_HOST: api.testpilotdev-controller.oraclecorp.com
+          API_HOST: api.testpilotdev-controller.oraclecloud.com
 
       # Upload build scan data.
       # The actual publishing must be done in a separate job (see ci-report.yml).
