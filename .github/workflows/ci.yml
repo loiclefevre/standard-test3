@@ -35,13 +35,14 @@ jobs:
     steps:
       - name: Test
         run: |
-          echo API_HOST
+          echo $API_HOST
 
       - id: build_guard
         uses: loiclefevre/test@v0.0.55
         with:
           action: skip-testing
-          prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
+          prefix_list: README.md,LICENSE,.gitignore
+          # .github/workflows/ci.yml
 
       - uses: actions/checkout@v4
         if: steps.build_guard.outputs.skip_tests == 'no'
