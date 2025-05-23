@@ -34,12 +34,10 @@ jobs:
           - rdbms: base-database-service-23ai
     steps:
       - id: build_guard
-        uses: loiclefevre/test@v0.0.53
+        uses: loiclefevre/test@v0.0.54
         with:
           action: skip-testing
           prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
-        env:
-          API_HOST: api-testpilotdev-controller.oraclecorp.com
 
       - uses: actions/checkout@v4
         if: steps.build_guard.outputs.skip_tests == 'no'
@@ -53,14 +51,12 @@ jobs:
       # test
       - id: create_database
         if: steps.build_guard.outputs.skip_tests == 'no'
-        uses: loiclefevre/test@v0.0.53
+        uses: loiclefevre/test@v0.0.54
         with:
           oci-service: ${{ matrix.rdbms }}
           action: create
           user: test,loic
           password: ${{ secrets.TEST_USER_PASSWORD }}
-        env:
-          API_HOST: api-testpilotdev-controller.oraclecorp.com
 
       - name: Set up Java 21
         if: steps.build_guard.outputs.skip_tests == 'no'
@@ -124,14 +120,12 @@ jobs:
         run: ./.github/build-github.sh
         shell: bash
 
-      - uses: loiclefevre/test@v0.0.53
+      - uses: loiclefevre/test@v0.0.54
         if: steps.build_guard.outputs.skip_tests == 'no'
         with:
           oci-service: ${{ matrix.rdbms }}
-          action: drop
+          action: delete
           user: test,loic
-        env:
-          API_HOST: api-testpilotdev-controller.oraclecorp.com
 
       # Upload build scan data.
       # The actual publishing must be done in a separate job (see ci-report.yml).
