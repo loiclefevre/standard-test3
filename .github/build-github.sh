@@ -1,7 +1,5 @@
 #!/bin/bash
 
-env
-
 goal="-Drdbms=$RDBMS -DdbUser=test_$RUNID -DdbPassword=My_Password_4_Testing -DrunID=$RUNID -DdbHost=$HOST -DdbService=$SERVICE"
 
 function logAndExec() {
