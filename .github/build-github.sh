@@ -2,7 +2,7 @@
 
 env
 
-goal="-Drdbms=$RDBMS -DdbUser=test_$RUNID -DdbPassword=My_Password_4_Testing -DrunID=$RUNID -DdbHost=$DATABASE_HOST -DdbService=$DATABASE_SERVICE"
+goal="-Drdbms=$RDBMS -DdbUser=test_$RUNID -DdbPassword=My_Password_4_Testing -DrunID=$RUNID -DdbHost=$HOST -DdbService=$SERVICE"
 
 function logAndExec() {
   echo 1>&2 "Executing:" "${@}"
