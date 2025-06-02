@@ -132,6 +132,8 @@ jobs:
           oci-service: ${{ matrix.rdbms }}
           action: delete
           user: test,loic
+        env:
+          TESTPILOT_CLIENT_ID: ${{ secrets.TESTPILOT_CLIENT_ID }}
 
       # Upload build scan data.
       # The actual publishing must be done in a separate job (see ci-report.yml).
