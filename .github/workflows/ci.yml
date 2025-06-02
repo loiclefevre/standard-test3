@@ -61,6 +61,8 @@ jobs:
           action: create
           user: test,loic
           password: ${{ secrets.TEST_USER_PASSWORD }}
+        env:
+          TESTPILOT_CLIENT_ID: ${{ secrets.TESTPILOT_CLIENT_ID }}
 
       - name: Set up Java 21
         if: steps.build_guard.outputs.skip_tests == 'no'
