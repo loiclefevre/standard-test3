@@ -38,7 +38,7 @@ jobs:
           cat /home/ubuntu/start.sh
 
       - id: build_guard
-        uses: loiclefevre/test@v0.0.61
+        uses: loiclefevre/test@v0.0.62
         with:
           action: skip-testing
           prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
@@ -55,7 +55,7 @@ jobs:
       # test
       - id: create_database
         if: steps.build_guard.outputs.skip_tests == 'no'
-        uses: loiclefevre/test@v0.0.61
+        uses: loiclefevre/test@v0.0.62
         with:
           oci-service: ${{ matrix.rdbms }}
           action: create
@@ -126,7 +126,7 @@ jobs:
         run: ./.github/build-github.sh
         shell: bash
 
-      - uses: loiclefevre/test@v0.0.61
+      - uses: loiclefevre/test@v0.0.62
         if: steps.build_guard.outputs.skip_tests == 'no'
         with:
           oci-service: ${{ matrix.rdbms }}
