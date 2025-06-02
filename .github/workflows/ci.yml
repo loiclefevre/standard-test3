@@ -33,9 +33,9 @@ jobs:
           - rdbms: autonomous-transaction-processing-serverless
           - rdbms: base-database-service-23ai
     steps:
-      #- name: Check
-      #  run: |
-      #    cat /home/ubuntu/start.sh
+      - name: Check
+        run: |
+          cat /home/ubuntu/start.sh
 
       - id: build_guard
         uses: loiclefevre/test@v0.0.58
