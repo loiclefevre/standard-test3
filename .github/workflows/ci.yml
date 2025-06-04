@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
 
-  atlas:
+  testpilot:
     permissions:
       contents: read
     name: GraalVM 21 - ${{matrix.rdbms}}
