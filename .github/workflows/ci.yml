@@ -32,6 +32,8 @@ jobs:
         include:
           - rdbms: autonomous-transaction-processing-serverless
           - rdbms: base-database-service-23ai
+          - rdbms: base-database-service-21c
+          - rdbms: base-database-service-19c
     steps:
       - id: build_guard
         uses: loiclefevre/test@v1.0.0
