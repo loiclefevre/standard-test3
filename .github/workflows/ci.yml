@@ -33,15 +33,11 @@ jobs:
           - rdbms: autonomous-transaction-processing-serverless
           - rdbms: base-database-service-23ai
     steps:
-      - name: Check
-        run: |
-          cat /home/ubuntu/start.sh
-
-      - id: build_guard
-        uses: loiclefevre/test@v1.0.0
-        with:
-          action: skip-testing
-          prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
+#      - id: build_guard
+#        uses: loiclefevre/test@v1.0.0
+#        with:
+#          action: skip-testing
+#          prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
 
       - uses: actions/checkout@v4
         if: steps.build_guard.outputs.skip_tests == 'no'
