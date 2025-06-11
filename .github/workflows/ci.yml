@@ -36,7 +36,7 @@ jobs:
           - rdbms: base-database-service-19c
     steps:
       - id: build_guard
-        uses: loiclefevre/test@v1.0.0
+        uses: loiclefevre/test@v1.0.2
         with:
           action: skip-testing
           prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
@@ -53,12 +53,11 @@ jobs:
       # test
       - id: create_database
         if: steps.build_guard.outputs.skip_tests == 'no'
-        uses: loiclefevre/test@v1.0.0
+        uses: loiclefevre/test@v1.0.2
         with:
           oci-service: ${{ matrix.rdbms }}
           action: create
           user: test,loic
-          password: ${{ secrets.TEST_USER_PASSWORD }}
         env:
           TESTPILOT_CLIENT_ID: ${{ secrets.TESTPILOT_CLIENT_ID }}
 
@@ -119,6 +118,7 @@ jobs:
           RUNID: ${{ github.run_number }}
           HOST: ${{ steps.create_database.outputs.database_host }}
           SERVICE: ${{ steps.create_database.outputs.database_service }}
+          PASSWORD: ${{ steps.create_database.outputs.database_password }}
           #LD_PRELOAD: /home/ubuntu/libtfojdbc1.so
           #LD_LIBRARY_PATH: /home/ubuntu
           # These runners have no HOME variable set by default, we need to explicitly set it to make the build work
@@ -126,7 +126,7 @@ jobs:
         run: ./.github/build-github.sh
         shell: bash
 
-      - uses: loiclefevre/test@v1.0.0
+      - uses: loiclefevre/test@v1.0.2
         if: steps.build_guard.outputs.skip_tests == 'no'
         with:
           oci-service: ${{ matrix.rdbms }}

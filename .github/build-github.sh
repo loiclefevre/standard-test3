@@ -1,6 +1,6 @@
 #!/bin/bash
 
-goal="-Drdbms=$RDBMS -DdbUser=test_$RUNID -DdbPassword=My_Password_4_Testing -DrunID=$RUNID -DdbHost=$HOST -DdbService=$SERVICE"
+goal="-Drdbms=$RDBMS -DdbUser=test_$RUNID -DdbPassword=$PASSWORD -DrunID=$RUNID -DdbHost=$HOST -DdbService=$SERVICE"
 
 function logAndExec() {
   echo 1>&2 "Executing:" "${@}"
