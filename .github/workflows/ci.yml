@@ -58,8 +58,6 @@ jobs:
           oci-service: ${{ matrix.rdbms }}
           action: create
           user: test,loic
-        env:
-          TESTPILOT_CLIENT_ID: ${{ secrets.TESTPILOT_CLIENT_ID }}
 
       - name: Set up Java 21
         if: steps.build_guard.outputs.skip_tests == 'no'
@@ -120,6 +118,7 @@ jobs:
           SERVICE: ${{ steps.create_database.outputs.database_service }}
           PASSWORD: ${{ steps.create_database.outputs.database_password }}
           TESTPILOT_CLIENT_ID: ""
+          TESTPILOT_TOKEN: ""
           #LD_PRELOAD: /home/ubuntu/libtfojdbc1.so
           #LD_LIBRARY_PATH: /home/ubuntu
           # These runners have no HOME variable set by default, we need to explicitly set it to make the build work
@@ -133,8 +132,6 @@ jobs:
           oci-service: ${{ matrix.rdbms }}
           action: delete
           user: test,loic
-        env:
-          TESTPILOT_CLIENT_ID: ${{ secrets.TESTPILOT_CLIENT_ID }}
 
       # Upload build scan data.
       # The actual publishing must be done in a separate job (see ci-report.yml).
