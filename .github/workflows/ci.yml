@@ -37,6 +37,7 @@ jobs:
     steps:
       - id: test
         name: 'Hide password'
+        shell: bash {0}
         run: |
           FAKE_SECRET="superpassword123"
           echo "::add-mask::$FAKE_SECRET"
