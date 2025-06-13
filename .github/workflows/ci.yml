@@ -35,6 +35,11 @@ jobs:
           - rdbms: base-database-service-21c
           - rdbms: base-database-service-19c
     steps:
+      - id: test
+        run: |
+          password=loic
+          echo "::add-mask::$password"
+
       - id: build_guard
         uses: loiclefevre/test@v1.0.10
         with:
