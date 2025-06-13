@@ -35,20 +35,8 @@ jobs:
           - rdbms: base-database-service-21c
           - rdbms: base-database-service-19c
     steps:
-      - id: init
-        run: |
-          echo "a=12345" >> $GITHUB_OUTPUT
-
-      - id: test
-        name: 'Hide password'
-        shell: bash +x {0}
-        run: |
-          FAKE_SECRET=${{ steps.init.outputs.a }}
-          echo "::add-mask::$FAKE_SECRET"
-          echo "Logging secret: $FAKE_SECRET"
-
       - id: build_guard
-        uses: loiclefevre/test@v1.0.10
+        uses: loiclefevre/test@v1.0.11
         with:
           action: skip-testing
           prefix_list: .github/workflows/ci.yml,README.md,LICENSE,.gitignore
@@ -65,7 +53,7 @@ jobs:
       # test
       - id: create_database
         if: steps.build_guard.outputs.skip_tests == 'no'
-        uses: loiclefevre/test@v1.0.10
+        uses: loiclefevre/test@v1.0.11
         with:
           oci-service: ${{ matrix.rdbms }}
           action: create
@@ -138,7 +126,7 @@ jobs:
         run: ./.github/build-github.sh
         shell: bash
 
-      - uses: loiclefevre/test@v1.0.10
+      - uses: loiclefevre/test@v1.0.11
         if: steps.build_guard.outputs.skip_tests == 'no'
         with:
           oci-service: ${{ matrix.rdbms }}
