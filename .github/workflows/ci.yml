@@ -36,8 +36,9 @@ jobs:
           - rdbms: base-database-service-19c
     steps:
       - id: test
+        name: 'Hide password'
         run: |
-          password=loic
+          password=$((loic))
           echo "::add-mask::$password"
 
       - id: build_guard
