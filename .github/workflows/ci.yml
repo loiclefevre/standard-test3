@@ -43,7 +43,7 @@ jobs:
         name: 'Hide password'
         shell: bash {0}
         run: |
-          FAKE_SECRET=${{ steps.init.steps.a }}
+          FAKE_SECRET=${{ steps.init.outputs.a }}
           echo "::add-mask::$FAKE_SECRET"
           echo "Logging secret: $FAKE_SECRET"
 
