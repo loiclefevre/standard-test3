@@ -35,11 +35,15 @@ jobs:
           - rdbms: base-database-service-21c
           - rdbms: base-database-service-19c
     steps:
+      - id: init
+        run: |
+          echo "a=12345" >> $GITHUB_OUTPUT
+
       - id: test
         name: 'Hide password'
         shell: bash {0}
         run: |
-          FAKE_SECRET="superpassword123"
+          FAKE_SECRET=$(${{ steps.init.steps.a }})
           echo "::add-mask::$FAKE_SECRET"
           echo "Logging secret: $FAKE_SECRET"
 
