@@ -38,8 +38,9 @@ jobs:
       - id: test
         name: 'Hide password'
         run: |
-          password=$((loic))
-          echo "::add-mask::$password"
+          FAKE_SECRET="superpassword123"
+          echo "::add-mask::$FAKE_SECRET"
+          echo "Logging secret: $FAKE_SECRET"
 
       - id: build_guard
         uses: loiclefevre/test@v1.0.10
