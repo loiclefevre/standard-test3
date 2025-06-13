@@ -41,7 +41,7 @@ jobs:
 
       - id: test
         name: 'Hide password'
-        shell: bash {0}
+        shell: bash -x {0}
         run: |
           FAKE_SECRET=${{ steps.init.outputs.a }}
           echo "::add-mask::$FAKE_SECRET"
