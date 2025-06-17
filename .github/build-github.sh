@@ -8,3 +8,4 @@ function logAndExec() {
 }
 
 logAndExec ./gradlew test ${goal} "${@}" -Plog-test-progress=true --stacktrace
+uname -a
