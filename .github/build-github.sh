@@ -3,7 +3,7 @@
 goal="-Drdbms=$RDBMS -DdbUser=test_$RUNID -DdbPassword=$PASSWORD -DrunID=$RUNID -DdbHost=$HOST -DdbService=$SERVICE"
 
 function logAndExec() {
-  echo 1>&2 "Executing:" "${@}"
+  echo 1>&2 "Executing:123" "${@}"
   exec "${@}"
 }
 
